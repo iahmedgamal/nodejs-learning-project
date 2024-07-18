@@ -1,0 +1,17 @@
+.form-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  form{
+    font: inherit;
+
+    margin: 2rem 2rem;
+  }
+
+  button {
+    font: inherit;
+    margin: 2rem 2rem;
+    border: 1px solid rgb(110, 30, 103);
+    border-radius: 4px;
+  }
