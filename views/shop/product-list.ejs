@@ -12,11 +12,20 @@
       <h1>My products</h1>
       list of all the products
 
-      <ul>
+      <div class="product-container">
         <% for(let product of products) { %>
-        <ui><%= product.title%></ui>
-        <% } %>
-      </ul>
+          <div class="product-item">
+            <img src="<%= product.imageUrl%>" alt="<%= product.title%>"/>
+            <h2><%= product.title%></h2>
+            <p><%= product.description%></p>
+            <form action="/add-to-cart/1" method="post">
+              <button type="submit">add to cart</button>
+            </form>
+          </div>
+         
+          <% } %>
+      </div>
+
 
       <% } else {%>
 
