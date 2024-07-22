@@ -1,14 +1,14 @@
 
-<%- include('includes/head.ejs')  %>
+<%- include('../includes/head.ejs')  %>
 
   </head>
   <body>
-    <%- include('includes/navigation.ejs')  %>
+    <%- include('../includes/navigation.ejs')  %>
 
 
     <main>
       <div class="form-container">
-        <form action="/admin/products" method="post">
+        <form action="/admin/add-product" method="post">
             <label>
               <input type="text" name="productName"/>
               Product name
@@ -18,4 +18,4 @@
         </form>
       </div>
     </main>
-    <%- include('includes/end.ejs')  %>
+    <%- include('../includes/end.ejs')  %>
