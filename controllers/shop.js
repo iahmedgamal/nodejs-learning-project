@@ -44,7 +44,7 @@ exports.getIndex = (req, res, next) => {
  exports.postCart = (req,res,next)=>{
   const productId = req.body.productId;
   console.log("postCart", productId)
-  res.redirect('/')
+  res.redirect('/cart')
  }
 
  exports.getCheckout = (req,res,next)=>{

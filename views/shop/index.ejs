@@ -18,6 +18,7 @@
             <img src="<%= product.imageUrl%>" alt="<%= product.title%>"/>
             <h2><%= product.title%></h2>
             <p><%= product.description%></p>
+            <%- include('../includes/add-to-cart.ejs', {product: product}) %>
           </div>
          
           <% } %>
