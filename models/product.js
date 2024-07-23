@@ -13,6 +13,7 @@ module.exports = class Product {
   }
 
   save() {
+    this.id = Math.random().toString()
     fs.readFile(myPath, (error, fileContent) => {
       console.log(fileContent);
       let products = [];
@@ -31,6 +32,19 @@ module.exports = class Product {
         return cb([]);
       }
       cb(JSON.parse(fileContent));
+    });
+  }
+
+  static fetchOneProduct(cb, productId){
+    fs.readFile(myPath, (error, fileContent) => {
+      if (error) {
+        return cb([]);
+      }
+      const productResult = JSON.parse(fileContent)
+     
+      cb( productResult.find((a)=>{
+        return a.id == productId
+      }));
     });
   }
 };

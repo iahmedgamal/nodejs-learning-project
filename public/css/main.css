@@ -33,3 +33,26 @@ header{
 .main-header__item a.active{
     color: rgb(110, 30, 103);
 }
+
+
+button {
+    font: inherit;
+    margin: 2rem 2rem;
+    border: 1px solid rgb(218, 175, 126);
+    width: 10rem;
+    height: 3rem;
+    background-color: rgb(222, 158, 84);
+    border-radius: 1rem;
+    color: white;
+
+  }
+
+  button:hover{
+    border: 1px solid rgb(219, 212, 218);
+    width: 10rem;
+    height: 3rem;
+    background-color: rgb(168, 94, 9);
+    cursor: pointer;
+    box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.3);
+
+  }

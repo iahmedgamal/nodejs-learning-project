@@ -19,6 +19,7 @@
             <h2><%= product.title%></h2>
             <p><%= product.description%></p>
             <form action="/add-to-cart/1" method="post">
+              <a href="/product-list/<%= product.id%>">Details</a>
               <button type="submit">add to cart</button>
             </form>
           </div>

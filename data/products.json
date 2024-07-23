@@ -1,1 +1,9 @@
-[{"title":"a new prod","imageUrl":"https://placehold.co/400","description":"this is an awesome desc","price":"212"},{"title":"a new product aded","imageUrl":"https://placehold.co/600x400","description":"a new product aded desc","price":"300"},{"title":"asdasd","imageUrl":"https://placehold.co/600x400/000000/FFF","description":"asdasd","price":"123"}]
+[
+  {
+    "title": "A new product",
+    "imageUrl": "https://dummyimage.com/600x400/000/fff",
+    "description": "The Smart Baby Dummy is a revolutionary pacifier designed to provide comfort and health monitoring for your baby. Equipped with advanced sensors, it tracks temperature, heart rate, and sleep patterns, ensuring your baby’s well-being around the clock. The dummy connects to a mobile app,",
+    "price": "12",
+    "id": "0.41534887102070184"
+  }
+]
