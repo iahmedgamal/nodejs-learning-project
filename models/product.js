@@ -35,7 +35,7 @@ module.exports = class Product {
     });
   }
 
-  static fetchOneProduct(cb, productId){
+  static fetchOneProduct(productId,cb){
     fs.readFile(myPath, (error, fileContent) => {
       if (error) {
         return cb([]);
