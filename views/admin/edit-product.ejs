@@ -8,7 +8,7 @@
 
     <main>
       <div class="form-container">
-        <form action="/admin/<% if(editing) { %>edit-product<% } else { %>add-product <% } %>" method="post">
+        <form action="/admin/<% if (editing) { %>edit-product<% } else { %>add-product<% } %>" method="post">
 
           <div class="element-form">
             <label for="productName"> Product name</label>
@@ -29,6 +29,11 @@
             <label for="description">Description</label>
             <textarea id="description" rows="5" name="description"><%= editing ? product.description : '' %></textarea>
           </div>
+          <% if(editing){ %>
+            <input type="hidden" value="<%= product.id %>" name="productId"/>
+          <% } %>
+
+  
           <button type="submit">
             <% if (editing) { %> 
               Update product

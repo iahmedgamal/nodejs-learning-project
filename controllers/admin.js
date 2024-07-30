@@ -7,7 +7,7 @@ exports.postAddProduct = (req, res, next) => {
   const description = req.body.description;
   const price = req.body.price;
 
-  const newProd = new Product(title,imageUrl,description,price)
+  const newProd = new Product(null, title,imageUrl,description,price)
   newProd.save()
   res.redirect("/");
 };
@@ -43,7 +43,16 @@ exports.getAddProduct = (req, res, next) => {
   };
 
   exports.postEditProduct = (req, res, next)=>{
-      // Product.
+     const prodId = req.body.productId
+     console.log("admin prodId", prodId)
+     const updatedTitle = req.body.productName
+     const updatedPrice = req.body.price
+     const updatedImageUrl = req.body.imageUrl
+     const updatedDescription = req.body.description
+    const updatedProduct = new Product(prodId, updatedTitle,updatedImageUrl,updatedDescription,updatedPrice)
+      console.log("admin postEditProduct", updatedProduct)
+    updatedProduct.save()
+    res.redirect('/admin/products')
   }
 
   exports.getAdminProducts = (req, res, next) => {

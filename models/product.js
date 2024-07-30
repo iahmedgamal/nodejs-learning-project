@@ -5,7 +5,8 @@ const path = require("path");
 const myPath = path.join(rootDir, "data", "products.json");
 
 module.exports = class Product {
-  constructor(title, imageUrl, description, price) {
+  constructor(id, title, imageUrl, description, price) {
+    this.id = id
     this.title = title;
     this.imageUrl = imageUrl;
     this.description = description;
@@ -13,16 +14,26 @@ module.exports = class Product {
   }
 
   save() {
-    this.id = Math.random().toString()
+    this.id = this.id || Math.random().toString();
     fs.readFile(myPath, (error, fileContent) => {
-      console.log(fileContent);
-      let products = [];
-      if (!error) {
-        products = JSON.parse(fileContent);
-      }
+      let products = JSON.parse(fileContent);
+      if(this.id){
+        const findMyExisitingProd = products.findIndex(prod => prod.id === this.id)
+        const updatedProducts = [...products]
+        updatedProducts[findMyExisitingProd] = this
+        fs.writeFile(myPath, JSON.stringify(updatedProducts), (error, done) => {});
 
-      products.push(this);
-      fs.writeFile(myPath, JSON.stringify(products), (error, done) => {});
+      }else{
+
+        if (!error) {
+          products = JSON.parse(fileContent);
+        }
+  
+        products.push(this);
+        fs.writeFile(myPath, JSON.stringify(products), (error, done) => {});
+      }
+    
+    
     });
   }
 
