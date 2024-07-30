@@ -37,6 +37,15 @@ module.exports = class Product {
     });
   }
 
+  static delete(id){
+    fs.readFile(myPath, (error, fileContent) => {
+      let products = JSON.parse(fileContent);
+      if(id){
+        const updatedProducts = products.filter(prod => prod.id !== id)
+        fs.writeFile(myPath, JSON.stringify(updatedProducts), (error, done) => {});
+      }
+    });
+  }
   static fetchAll(cb) {
     fs.readFile(myPath, (error, fileContent) => {
       if (error) {
