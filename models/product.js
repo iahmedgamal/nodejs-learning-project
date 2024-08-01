@@ -1,70 +1,140 @@
 const fs = require("fs");
-const rootDir = require("../util/path");
 const path = require("path");
+const rootDir = require("../util/path");
 
 const myPath = path.join(rootDir, "data", "products.json");
-
+const Cart = require("../models/cart");
 module.exports = class Product {
   constructor(id, title, imageUrl, description, price) {
-    this.id = id
+    this.id = id;
     this.title = title;
     this.imageUrl = imageUrl;
     this.description = description;
     this.price = price;
   }
 
-  save() {
-    this.id = this.id || Math.random().toString();
+  // Method to save a new product
+  saveNew() {
     fs.readFile(myPath, (error, fileContent) => {
-      let products = JSON.parse(fileContent);
-      if(this.id){
-        const findMyExisitingProd = products.findIndex(prod => prod.id === this.id)
-        const updatedProducts = [...products]
-        updatedProducts[findMyExisitingProd] = this
-        fs.writeFile(myPath, JSON.stringify(updatedProducts), (error, done) => {});
+      if (error) {
+        console.log('Error reading file:', error);
+        return;
+      }
 
-      }else{
+      let products = [];
+      try {
+        products = fileContent.length > 0 ? JSON.parse(fileContent) : [];
+      } catch (parseError) {
+        console.log('Error parsing JSON:', parseError);
+      }
 
-        if (!error) {
-          products = JSON.parse(fileContent);
+      // Assign a new ID for the new product
+      this.id = Math.random().toString();
+      products.push(this);
+
+      fs.writeFile(myPath, JSON.stringify(products), (writeError) => {
+        if (writeError) {
+          console.log('Error saving new product:', writeError);
         }
-  
-        products.push(this);
-        fs.writeFile(myPath, JSON.stringify(products), (error, done) => {});
-      }
-    
-    
+      });
     });
   }
 
-  static delete(id){
+  // Method to update an existing product
+  update() {
     fs.readFile(myPath, (error, fileContent) => {
-      let products = JSON.parse(fileContent);
-      if(id){
-        const updatedProducts = products.filter(prod => prod.id !== id)
-        fs.writeFile(myPath, JSON.stringify(updatedProducts), (error, done) => {});
+      if (error) {
+        console.log('Error reading file:', error);
+        return;
+      }
+
+      let products = [];
+      try {
+        products = fileContent.length > 0 ? JSON.parse(fileContent) : [];
+      } catch (parseError) {
+        console.log('Error parsing JSON:', parseError);
+        return;
+      }
+
+      const findMyExistingProdIndex = products.findIndex(prod => prod.id === this.id);
+
+      if (findMyExistingProdIndex >= 0) {
+        const updatedProducts = [...products];
+        updatedProducts[findMyExistingProdIndex] = this;
+
+        fs.writeFile(myPath, JSON.stringify(updatedProducts), (writeError) => {
+          if (writeError) {
+            console.log('Error updating product:', writeError);
+          }
+        });
+      } else {
+        console.log('Product not found');
       }
     });
   }
+
+  static deleteById(id) {
+    fs.readFile(myPath, (error, fileContent) => {
+      if (error) {
+        console.log('Error reading file:', error);
+        return;
+      }
+
+      let products = [];
+      try {
+        products = fileContent.length > 0 ? JSON.parse(fileContent) : [];
+      } catch (parseError) {
+        console.log('Error parsing JSON:', parseError);
+        return;
+      }
+
+      const updatedProducts = products.filter(prod => prod.id !== id);
+
+      fs.writeFile(myPath, JSON.stringify(updatedProducts), (writeError) => {
+        if (writeError) {
+          console.log('Error deleting product:', writeError);
+        }
+        Cart.deleteProduct(id);
+
+      });
+    });
+  }
+
   static fetchAll(cb) {
     fs.readFile(myPath, (error, fileContent) => {
       if (error) {
+        console.log('Error reading file:', error);
         return cb([]);
       }
-      cb(JSON.parse(fileContent));
+
+      let products = [];
+      try {
+        products = fileContent.length > 0 ? JSON.parse(fileContent) : [];
+      } catch (parseError) {
+        console.log('Error parsing JSON:', parseError);
+      }
+
+      cb(products);
     });
   }
 
-  static fetchOneProduct(productId,cb){
+  static fetchOneProduct(productId, cb) {
     fs.readFile(myPath, (error, fileContent) => {
       if (error) {
-        return cb([]);
+        console.log('Error reading file:', error);
+        return cb(null);
       }
-      const productResult = JSON.parse(fileContent)
-     
-      cb( productResult.find((a)=>{
-        return a.id == productId
-      }));
+
+      let products = [];
+      try {
+        products = fileContent.length > 0 ? JSON.parse(fileContent) : [];
+      } catch (parseError) {
+        console.log('Error parsing JSON:', parseError);
+        return cb(null);
+      }
+
+      const product = products.find((a) => a.id == productId);
+      cb(product);
     });
   }
 };
